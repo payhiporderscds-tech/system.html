@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consumer Dispute Services – NPI Method</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/pdfmake.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.10/build/vfs_fonts.js"></script>
+  <style>
+    :root { --brand:#4f46e5; --brand-2:#1e293b; }
+    .card { border-radius:1rem; box-shadow:0 10px 30px rgba(2,6,23,.12) }
+    .brand-gradient { background:linear-gradient(135deg,var(--brand),#22c55e) }
+    textarea { white-space:pre-wrap }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<!-- HEADER -->
+<header class="brand-gradient text-white p-4 flex justify-between items-center">
+  <h1 class="text-lg font-bold">Consumer Dispute Services – NPI Method</h1>
+  <nav class="space-x-4">
+    <a href="#intake">Intake</a>
+    <a href="#letters">Letters</a>
+    <a href="#resources">Resources</a>
+    <a href="#premium">Premium</a>
+    <a href="#contact">Contact</a>
+    <button id="loginBtn" class="bg-white text-indigo-600 px-2 py-1 rounded">Login</button>
+    <button id="logoutBtn" class="hidden bg-red-600 px-2 py-1 rounded">Logout</button>
+  </nav>
+</header>
+
+<main class="max-w-4xl mx-auto p-6">
+
+<!-- CLIENT INTAKE -->
+<section id="intake" class="my-8">
+  <h2 class="text-xl font-bold mb-4">Client Intake</h2>
+  <form id="intakeForm" class="space-y-4">
+    <input id="intakeName" class="w-full border p-2 rounded" placeholder="Your Name" required />
+    <input id="intakeEmail" type="email" class="w-full border p-2 rounded" placeholder="Your Email" required />
+    <input id="intakePhone" class="w-full border p-2 rounded" placeholder="Phone Number" />
+    <textarea id="intakeNotes" class="w-full border p-2 rounded" placeholder="Notes"></textarea>
+    <input id="intakeFile" type="file" accept=".pdf,.txt" />
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Submit Intake</button>
+  </form>
+  <p id="intakeMsg" class="mt-2 text-sm text-green-600"></p>
+</section>
+
+<!-- LETTER GENERATOR -->
+<section id="letters" class="my-8">
+  <h2 class="text-xl font-bold mb-4">Letter Generator</h2>
+  <div class="space-y-2">
+    <input id="yourName" class="w-full border p-2 rounded" placeholder="Your Name" />
+    <textarea id="yourAddr" class="w-full border p-2 rounded" placeholder="Your Address"></textarea>
+    <input id="letterDate" type="date" class="w-full border p-2 rounded" />
+    <input id="recipName" class="w-full border p-2 rounded" placeholder="Recipient Name" />
+    <textarea id="recipAddr" class="w-full border p-2 rounded" placeholder="Recipient Address"></textarea>
+    <input id="acctInfo" class="w-full border p-2 rounded" placeholder="Account Info" />
+    <textarea id="notes" class="w-full border p-2 rounded" placeholder="Additional Notes"></textarea>
+    <button onclick="generateLetter()" id="generateBtn" class="bg-indigo-600 text-white px-4 py-2 rounded">Generate Letter</button>
+    <textarea id="output" rows="10" class="w-full border p-2 rounded"></textarea>
+    <div class="space-x-2">
+      <button id="docBtn" onclick="downloadDoc()" class="bg-gray-400 text-white px-3 py-1 rounded" disabled>Download DOC</button>
+      <button id="pdfBtn" onclick="downloadPDF()" class="bg-gray-400 text-white px-3 py-1 rounded" disabled>Download PDF</button>
+    </div>
+  </div>
+  <div class="mt-4 p-4 border rounded bg-slate-100">
+    <h3 class="font-semibold">DIY Mailing Instructions</h3>
+    <ul class="list-disc ml-6 text-sm">
+      <li>Print and sign your letter</li>
+      <li>Include a copy of your ID and proof of address</li>
+      <li>Mail via Certified Mail with Return Receipt</li>
+    </ul>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources" class="my-8">
+  <h2 class="text-xl font-bold mb-4">Resources & E-Books</h2>
+  <div id="ebooksGrid" class="grid md:grid-cols-3 gap-4"></div>
+</section>
+
+<!-- PREMIUM -->
+<section id="premium" class="my-8">
+  <h2 class="text-xl font-bold mb-4">Premium Services</h2>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="card p-4 bg-white">
+      <h3 class="font-semibold mb-2">Evidence Packet Creation</h3>
+      <p class="text-sm">We’ll assemble your dispute packet with exhibits, logs, and supporting documents.</p>
+      <a href="https://payhip.com/your-evidence-packet" target="_blank" class="mt-3 inline-block px-4 py-2 bg-yellow-500 text-white rounded">Purchase Packet</a>
+    </div>
+    <div class="card p-4 bg-white">
+      <h3 class="font-semibold mb-2">Full Service Consultation</h3>
+      <p class="text-sm">We draft, mail, and track disputes on your behalf.</p>
+      <a href="https://calendly.com/disputeassistant" target="_blank" class="mt-3 inline-block px-4 py-2 bg-indigo-600 text-white rounded">Book Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="my-8">
+  <h2 class="text-xl font-bold mb-4">Contact Us</h2>
+  <p>Email: <a href="mailto:disputeassistant@gmail.com" class="text-indigo-600">disputeassistant@gmail.com</a></p>
+  <p>Phone: <a href="tel:3463422447" class="text-indigo-600">346-342-2447</a></p>
+  <form id="contactForm" class="space-y-2 mt-4">
+    <input id="cName" class="w-full border p-2 rounded" placeholder="Your Name" required />
+    <input id="cEmail" type="email" class="w-full border p-2 rounded" placeholder="Your Email" required />
+    <textarea id="cMsg" class="w-full border p-2 rounded" placeholder="Message"></textarea>
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Send</button>
+  </form>
+  <p id="contactMsg" class="mt-2 text-sm text-green-600"></p>
+</section>
+
+</main>
+
+<footer class="text-center text-xs text-slate-500 my-6">
+  © <span id="year"></span> Consumer Dispute Services. Educational only. Not legal advice.
+</footer>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIFLzjNsgWusGBOOdVdZlkUWk_j8YdJws",
+    authDomain: "cds-dispute-system.firebaseapp.com",
+    projectId: "cds-dispute-system",
+    storageBucket: "cds-dispute-system.appspot.com",
+    messagingSenderId: "1086342153390",
+    appId: "1:1086342153390:web:c8f65869313c838280993f",
+    measurementId: "G-WGTD60DXSS"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // Login/Logout
+  document.getElementById("loginBtn").addEventListener("click", async ()=>{
+    const email = prompt("Enter email:");
+    const pass = prompt("Enter password:");
+    try { await signInWithEmailAndPassword(auth, email, pass); alert("Logged in"); }
+    catch { try { await createUserWithEmailAndPassword(auth, email, pass); alert("Account created & logged in"); } catch(e){ alert("Error: "+e.message);} }
+  });
+  document.getElementById("logoutBtn").addEventListener("click", async ()=>{ await signOut(auth); alert("Logged out"); });
+
+  // Intake form
+  document.getElementById("intakeForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const file = document.getElementById("intakeFile").files[0];
+    try {
+      const docRef = await addDoc(collection(db,"intake_submissions"),{
+        name: intakeName.value, email: intakeEmail.value, phone: intakePhone.value, notes: intakeNotes.value, ts: Date.now()
+      });
+      if(file){ await uploadBytes(ref(storage,`user_uploads/anonymous/${file.name}`),file); }
+      intakeMsg.textContent="Submission saved!";
+    } catch(err){ intakeMsg.textContent="Error: "+err.message; }
+  });
+
+  // Year
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+<script>
+function generateLetter(){
+  const name=document.getElementById('yourName').value||'[Your Name]';
+  const addr=document.getElementById('yourAddr').value||'[Your Address]';
+  const date=document.getElementById('letterDate').value||new Date().toISOString().slice(0,10);
+  const recipName=document.getElementById('recipName').value||'[Recipient]';
+  const recipAddr=document.getElementById('recipAddr').value||'[Recipient Address]';
+  const acctInfo=document.getElementById('acctInfo').value||'[Account Info]';
+  const notes=document.getElementById('notes').value||'';
+  const letter=`${name}\n${addr}\n\n${date}\n\n${recipName}\n${recipAddr}\n\nRe: ${acctInfo}\n\nDear ${recipName},\n\nI dispute the accuracy of this information.${notes?`\n\nNotes: ${notes}`:''}\n\nSincerely,\n${name}`;
+  document.getElementById('output').value=letter;
+  document.getElementById('docBtn').disabled=false;
+  document.getElementById('pdfBtn').disabled=false;
+}
+function downloadDoc(){
+  const c=document.getElementById('output').value;
+  const blob=new Blob([c],{type:'application/msword'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='dispute_letter.doc'; a.click();
+}
+function downloadPDF(){
+  const c=document.getElementById('output').value;
+  const docDef={content:[{text:'Dispute Letter',style:'header'},{text:c,margin:[0,10,0,0]}],styles:{header:{fontSize:16,bold:true}},defaultStyle:{fontSize:11}};
+  pdfMake.createPdf(docDef).download('dispute_letter.pdf');
+}
+function renderEbooks(){
+  const ebooks=[{
+    title:'Consumer Dispute System Blueprint',cover:'https://payhip.com/cdn-cgi/image/format=auto,width=250/https://pe56d.s3.amazonaws.com/o_1j31j8j1tun5hgs1fn13n6nrlr.png',url:'https://payhip.com/b/4OyJS'
+  },{
+    title:'Credit Repair Letters Pack',cover:'https://payhip.com/cdn-cgi/image/format=auto,width=250/https://pe56d.s3.amazonaws.com/o_1j31j9rev1o241vf01bk11fr61mirr.png',url:'https://payhip.com/b/vdB58'
+  },{
+    title:'NPI Doctrine Explained',cover:'https://payhip.com/cdn-cgi/image/format=auto,width=250/https://pe56d.s3.amazonaws.com/o_1j31jb0i4arq1sp41k5p1bh26lqr.png',url:'https://payhip.com/b/wHflQ'
+  }];
+  const grid=document.getElementById('ebooksGrid');
+  ebooks.forEach(b=>{
+    const card=document.createElement('div');
+    card.className='card p-4 bg-white text-center';
+    card.innerHTML=`<img src="${b.cover}" alt="${b.title}" class="mx-auto mb-3 rounded max-h-48 object-cover"/><h4 class="font-semibold">${b.title}</h4><div class="mt-3"><a href="${b.url}" target="_blank" class="px-4 py-2 bg-yellow-500 text-white rounded">View on PayHip</a></div>`;
+    grid.appendChild(card);
+  });
+}
+renderEbooks();
+</script>
+
+</body>
+</html>
