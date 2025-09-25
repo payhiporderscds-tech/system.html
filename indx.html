@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome – Consumer Dispute Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --brand:#4f46e5; --brand-2:#1e293b; }
+    .brand-gradient { background:linear-gradient(135deg,var(--brand),#22c55e); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<!-- HEADER -->
+<header class="brand-gradient text-white p-6 text-center">
+  <h1 class="text-2xl font-bold">Consumer Dispute Services</h1>
+  <p class="mt-2 text-sm">NPI Method – Take control of your credit disputes</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="max-w-3xl mx-auto text-center py-16 px-6">
+  <h2 class="text-3xl font-bold mb-6">Welcome</h2>
+  <p class="mb-6 text-lg">
+    You’re about to begin using our secure Consumer Dispute Services platform.<br/>
+    Choose between <strong>DIY letter generation</strong> or upgrade to our <strong>premium services</strong> where we handle everything for you.
+  </p>
+  <a href="system.html" 
+     class="px-6 py-3 bg-indigo-600 text-white text-lg rounded-lg hover:bg-indigo-700">
+     Get Started
+  </a>
+</main>
+
+<!-- FOOTER -->
+<footer class="text-center text-xs text-slate-500 mt-16 mb-6">
+  © <span id="year"></span> Consumer Dispute Services. All rights reserved.
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
